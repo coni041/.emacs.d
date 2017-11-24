@@ -1,1 +1,1 @@
-# .emacs.d for gnupack emacs
+# .emacs.d for NT Emacs.
