@@ -1,4 +1,4 @@
-;;; .emacs --- dot emacs file
+﻿;;; .emacs --- dot emacs file
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -28,6 +28,26 @@
   (add-to-list 'load-path default-directory)
   (normal-top-level-add-subdirs-to-load-path)
   )
+
+;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
+;;; @ package manager                                               ;;;
+;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
+(require 'package)
+(package-initialize)
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
+
+;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
+;;; @ theme                                                         ;;;
+;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
+;; テーマ格納ディレクトリのパス追加
+(add-to-list 'custom-theme-load-path
+             (file-name-as-directory (concat user-emacs-directory "theme"))
+             )
+;; テーマ選択
+(load-theme 'zenburn t)
 
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
@@ -73,34 +93,29 @@
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 ;;; @ language - fontset                                            ;;;
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;; デフォルト フォント
-;; (set-face-attribute 'default nil :family "Migu 1M" :height 110)
-;;(set-face-font 'default "Migu 1M-11:antialias=standard")
-;; プロポーショナル フォント
-;; (set-face-attribute 'variable-pitch nil :family "Migu 1M" :height 110)
-;;(set-face-font 'variable-pitch "Migu 1M-11:antialias=standard")
-;; 等幅フォント
-;; (set-face-attribute 'fixed-pitch nil :family "Migu 1M" :height 110)
-;;(set-face-font 'fixed-pitch "Migu 1M-11:antialias=standard")
-;; ツールチップ表示フォント
-;; (set-face-attribute 'tooltip nil :family "Migu 1M" :height 90)
-;;(set-face-font 'tooltip "Migu 1M-9:antialias=standard")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "MyricaM M" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
+
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 ;;; @ screen - frame                                                ;;;
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 (setq default-frame-alist
-      (append '((width                . 85)  ; フレーム幅
-                (height               . 38 ) ; フレーム高
-                (line-spacing         . 0  ) ; 文字間隔
-                (left-fringe          . 10 ) ; 左フリンジ幅
-                (right-fringe         . 11 ) ; 右フリンジ幅
-                (menu-bar-lines       . 1  ) ; メニューバー
-                (tool-bar-lines       . 0  ) ; ツールバー
-                (vertical-scroll-bars . 0  ) ; スクロールバー
-                (scroll-bar-width     . 0  ) ; スクロールバー幅
-                (cursor-type          . box) ; カーソル種別
-                (alpha                . 100) ; 透明度
+      (append '((width			. 85)  ; フレーム幅
+                (height			. 38 ) ; フレーム高
+                (line-spacing		. 0  ) ; 文字間隔
+                (left-fringe		. 10 ) ; 左フリンジ幅
+                (right-fringe		. 11 ) ; 右フリンジ幅
+                (menu-bar-lines		. 1  ) ; メニューバー
+                (tool-bar-lines		. 0  ) ; ツールバー
+                (vertical-scroll-bars	. 0  ) ; スクロールバー
+                (scroll-bar-width	. 0  ) ; スクロールバー幅
+                (cursor-type		. box) ; カーソル種別
+                (alpha			. 100) ; 透明度
                 ) default-frame-alist) )
 (setq initial-frame-alist default-frame-alist)
 ;; スクロールバーを表示
@@ -292,23 +307,6 @@
 (hiwin-activate)
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;;; @ search - migemo                                               ;;;
-;;;   https://github.com/emacs-jp/migemo                            ;;;
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;; (require 'migemo)
-;; (defvar migemo-command nil)
-;; (setq migemo-command "cmigemo")
-;; (defvar migemo-options nil)
-;; (setq migemo-options '("-q" "--emacs"))
-;; (defvar migemo-dictionary nil)
-;; (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-;; (defvar migemo-user-dictionary nil)
-;; (defvar migemo-regex-dictionary nil)
-;; (defvar migemo-coding-system nil)
-;; (setq migemo-coding-system 'utf-8-unix)
-;; (load-library "migemo")
-
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 ;;; @ file - backup                                                 ;;;
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 ;; ファイルオープン時のバックアップ（~）（有効：t、無効：nil）
@@ -389,37 +387,6 @@
         (goto-char (point-max))
       ad-do-it) ))
 
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;;; @ shell                                                         ;;;
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;; (require 'shell)
-;; (setq explicit-shell-file-name "bash.exe")
-;; (setq shell-command-switch "-c")
-;; (setq shell-file-name "bash.exe")
-;; ;; (setq explicit-bash.exe-args '("--login" "-i"))
-;; ;; (M-! and M-| and compile.el)
-;; (setq shell-file-name "bash.exe")
-;; (modify-coding-system-alist 'process ".*sh\\.exe" 'utf-8)
-
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;;; @ package manager                                               ;;;
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-(require 'package)
-(package-initialize)
-(setq package-archives
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
-
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;;; @ theme                                                         ;;;
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-;; テーマ格納ディレクトリのパス追加
-(add-to-list 'custom-theme-load-path
-             (file-name-as-directory (concat user-emacs-directory "theme"))
-             )
-;; テーマ選択
-(load-theme 'zenburn t)
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 ;;; @ server                                                        ;;;
@@ -448,27 +415,27 @@
   ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
   ;;; @ GLOBAL GTAGS                                                  ;;;
   ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
-  ;; (add-to-list 'load-path "/usr/local/share/gtags")
-  ;; (autoload 'gtags-mode "gtags" "" t)
-  ;; (add-hook 'c-mode-hook 'gtags-mode)
-  ;; (add-hook 'c++-mode-hook 'gtags-mode)
-  ;; (add-hook 'dired-mode-hook 'gtags-mode)
-  ;; (setq gtags-mode-hook
-  ;;     '(lambda ()
-  ;;         (local-set-key (kbd "M-t") 'gtags-find-tag)    ;関数へジャンプ
-  ;;         (local-set-key (kbd "M-r") 'gtags-find-rtag)   ;関数の参照元へジャンプ
-  ;;         (local-set-key (kbd "M-s") 'gtags-find-symbol) ;変数の定義元/参照先へジャンプ
-  ;;         (local-set-key (kbd "C-t") 'gtags-pop-stack)   ;前のバッファに戻る
-  ;; 	  (local-set-key (kbd "M-f") 'gtags-find-file)   ;ファイルを開く
-  ;;         ))
-  ;; (defun my-c-mode-update-gtags ()
-  ;;   (let* ((file (buffer-file-name (current-buffer)))
-  ;; 	   (dir (directory-file-name (file-name-directory file))))
-  ;;     (when (executable-find "global")
-  ;; 	(start-process "gtags-update" nil
-  ;; 		       "global" "-uv"))))
-  ;; (add-hook 'after-save-hook
-  ;; 	    'my-c-mode-update-gtags)
+  (add-to-list 'load-path "C:/work/home/.emacs.d/glo656wb/share/gtags")
+  (autoload 'gtags-mode "gtags" "" t)
+  (add-hook 'c-mode-hook 'gtags-mode)
+  (add-hook 'c++-mode-hook 'gtags-mode)
+  (add-hook 'dired-mode-hook 'gtags-mode)
+  (setq gtags-mode-hook
+      '(lambda ()
+          (local-set-key (kbd "M-t") 'gtags-find-tag)    ;関数へジャンプ
+          (local-set-key (kbd "M-r") 'gtags-find-rtag)   ;関数の参照元へジャンプ
+          (local-set-key (kbd "M-s") 'gtags-find-symbol) ;変数の定義元/参照先へジャンプ
+          (local-set-key (kbd "C-t") 'gtags-pop-stack)   ;前のバッファに戻る
+  	  (local-set-key (kbd "M-f") 'gtags-find-file)   ;ファイルを開く
+          ))
+  (defun my:c-mode-update-gtags ()
+    (let* ((file (buffer-file-name (current-buffer)))
+  	   (dir (directory-file-name (file-name-directory file))))
+      (when (executable-find "global")
+  	(start-process "gtags-update" nil
+  		       "global" "-uv"))))
+  (add-hook 'after-save-hook
+  	    'my:c-mode-update-gtags)
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;
 ;;; @ moccur                                                        ;;;

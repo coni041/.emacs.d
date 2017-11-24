@@ -2,3 +2,4 @@
 server
 srecode-map.el
 auto-save-list/
+/ac-comphist.dat
