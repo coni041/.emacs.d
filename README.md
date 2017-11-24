@@ -1,1 +1,1 @@
-# dot_emacs.d
+# .emacs.d for gnupack emacs

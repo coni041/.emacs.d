@@ -1,15 +1,4 @@
-# Compiled
-*.elc
 
-# Packaging
-.cask
-
-# Backup files
-*~
-
-# Undo-tree save-files
-*.~undo-tree
-
-# .emacs.d
+server
+srecode-map.el
 auto-save-list/
-server/
